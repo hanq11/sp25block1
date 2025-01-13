@@ -6,6 +6,18 @@
 </head>
 <body>
     Username: <span th:text="${user}"></span> <br>
-    Password: <span th:text="${pass}"></span>
+    Password: <span th:text="${pass}"></span> <br>
+
+    <span>Chao mung ban: [[${user}]]</span> <br>
+    <span>CHao mung ban: <span th:text="${user}"></span></span> <br>
+
+    <span>Truy xuat login request Username: [[${login.username}]], Password: [[${login.password}]]</span> <br>
+    <div th:object="${login}">
+        <p th:text="*{username}"></p>
+        <p th:text="*{password}"></p>
+    </div>
+    <p><a th:href="@{|/demo/${user}|}">Template literal </a></p>
+    <p><a th:href="@{/demo/{u}(u=${user})}">URL Expression thong thuong</a></p>
+
 </body>
-</html> 
+</html>

@@ -16,6 +16,7 @@ public class LoginController {
     public String login(LoginRequest loginRequest, Model model) {
         model.addAttribute("user", loginRequest.getUsername());
         model.addAttribute("pass", loginRequest.getPassword());
+        model.addAttribute("login", loginRequest);
         return "/thong-tin";
     }
 }
