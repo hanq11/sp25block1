@@ -1,5 +1,6 @@
 package com.example.sof301201.phongKham.util;
 
+import com.example.sof301201.phongKham.model.BacSi;
 import com.example.sof301201.phongKham.model.PhongKham;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -24,7 +25,7 @@ public class HibernateConfig {
         properties.put(Environment.SHOW_SQL, "true");
 
         conf.addAnnotatedClass(PhongKham.class);
-//        conf.addAnnotatedClass(BacSi.class);
+        conf.addAnnotatedClass(BacSi.class);
         conf.setProperties(properties);
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
