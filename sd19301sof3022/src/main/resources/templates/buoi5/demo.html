@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Thong thuong: <a th:href="@{/demo/{id}(id=${id})}">Link</a>
+    Template literal: <a th:href="@{|/demo/${id}|}">Link</a>
+
+    <th:block th:switch="${id}">
+        <p th:case="234">Dung</p>
+        <p th:case="*">Sai</p>
+    </th:block>
+    <br>
+    Thong tin sinh vien:
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ten</th>
+                <th>Tuoi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="student : ${danhSach}">
+                <tr>
+                    <td>[[${student.id}]]</td>
+                    <td>[[${student.ten}]]</td>
+                    <td>[[${student.tuoi}]]</td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+    <br>
+    DEMO Select box:
+    Student: <select name="student.id">
+        <th:block th:each="student: ${danhSach}">
+            <option th:text="${student.ten}" th:value="${student.id}"></option>
+        </th:block>
+    </select>
+    <br>
+    Demo radio button:
+    Student: <th:block th:each="student : ${danhSach}">
+        [[${student.ten}]] <input type="radio" name="student.id" th:value="${student.id}">
+    </th:block>
+</body>
+</html>

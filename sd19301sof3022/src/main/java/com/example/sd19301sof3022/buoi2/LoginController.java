@@ -46,17 +46,50 @@ public class LoginController {
 //        return "/buoi2/thong-tin";
 //    }
 
-    @PostMapping("/login")
-    public String login(Model model, LoginRequest loginRequest) {
-        model.addAttribute("user", loginRequest.getUsername());
-        model.addAttribute("pass", loginRequest.getPassword());
-        model.addAttribute("remember", loginRequest.isRemember());
-        return "/buoi2/thong-tin";
-    }
+//    @PostMapping("/login")
+//    public String login(Model model, LoginRequest loginRequest) {
+//        model.addAttribute("user", loginRequest.getUsername());
+//        model.addAttribute("pass", loginRequest.getPassword());
+//        model.addAttribute("remember", loginRequest.isRemember());
+//        return "/buoi2/thong-tin";
+//    }
 
     @GetMapping("/demo-path-variable/{id}")
     @ResponseBody
     public void demo(@PathVariable("id") Integer id) {
         System.out.println(id);
+    }
+
+    @ModelAttribute("pass")
+    public String demo() {
+        return "password-demo";
+    }
+
+    @PostMapping("/login")
+    public String login() {
+        return "/buoi2/thong-tin";
+    }
+
+    @ResponseBody
+    @GetMapping("/demo1")
+    public String demo1() {
+        return "demo1";
+    }
+
+    @GetMapping("/demo2")
+    public String demo2() {
+        return "redirect:/buoi2/demo1";
+    }
+
+    @GetMapping("/demo3")
+    public String demo3() {
+        return "forward:/buoi2/demo1";
+    }
+
+    @ResponseBody
+    @GetMapping("/api-demo")
+    public LoginRequest demo4() {
+        LoginRequest loginRequest = new LoginRequest("123", "321", true);
+        return loginRequest;
     }
 }
