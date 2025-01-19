@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Thong tin sinh vien:
+    <br>
+    ID: <span th:text="${student.id}"></span> <br>
+    Ten: <span th:text="${student.ten}"></span> <br>
+    Dia Chi: <span th:text="${student.diaChi}"></span> <br>
+    <div th:object="${student}">
+        ID <span th:text="*{id}"></span> <br>
+    </div>
+
+    Link thong thuong: <a th:href="@{/detail/{id}(id=${student.id})}">Detail</a> <br>
+    Link template literal: <a th:href="@{|/detail/${student.id}|}">Detail</a> <br>
+
+    Danh sach thong tin: <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ten</th>
+                <th>Dia chi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="student: ${danhSach}">
+                <tr>
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.ten}"></td>
+                    <td th:text="${student.diaChi}"></td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+    <br>
+    Combobox: <select name="student.id">
+        <th:block th:each="student : ${danhSach}">
+            <option value="${student.id}" th:text="${student.ten}"></option>
+        </th:block>
+    </select>
+    <br>
+    Radio button
+    <th:block th:each="student : ${danhSach}">
+        <input type="radio" value="${student.id}"> <span th:text="${student.ten}"></span>
+    </th:block>
+</body>
+</html>
