@@ -12,6 +12,15 @@
     <title>Title</title>
 </head>
 <body>
+    Them phong kham
+    <form action="/phong-kham/add" method="post">
+        Id: <input type="text" name="id"> <br>
+        Ten: <input type="text" name="ten"> <br>
+        Dia chi: <input type="text" name="diaChi"> <br>
+        So nha: <input type="text" name="soNha"> <br>
+        <button>Submit</button>
+    </form>
+
     <h2>Bang thong tin</h2>
     <table>
         <thead>
