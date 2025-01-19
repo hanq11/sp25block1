@@ -39,6 +39,11 @@
                     <td>${pk.ten}</td>
                     <td>${pk.diaChi}</td>
                     <td>${pk.soNha}</td>
+                    <td>
+                        <a href="/phong-kham/detail?id=${pk.id}">Detail</a>
+                        <a href="/phong-kham/xoa?id=${pk.id}">Delete</a>
+                        <a href="/phong-kham/view-update?id=${pk.id}">Update</a>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
