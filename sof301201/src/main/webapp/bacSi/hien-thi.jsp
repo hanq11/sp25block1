@@ -46,6 +46,11 @@
                     <td>${bs.luong}</td>
                     <td>${bs.diaChi}</td>
                     <td>${bs.phongKham.ten}</td>
+                    <td>
+                        <a href="/bac-si/detail?id=${bs.id}">Detail</a>
+                        <a href="/bac-si/delete?id=${bs.id}">Delete</a>
+                        <a href="/bac-si/view-update?id=${bs.id}">Update</a>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
