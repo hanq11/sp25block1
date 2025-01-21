@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Sua thong tin: <br>
+    <form action="/phong-kham/update" method="post">
+        Id: <input type="text" name="id" th:value="${phongKham.id}"> <br>
+        Ten: <input type="text" name="ten" th:value="${phongKham.ten}"> <br>
+        Dia chi: <input type="text" name="diaChi" th:value="${phongKham.diaChi}"> <br>
+        So nha: <input type="text" name="soNha" th:value="${phongKham.soNha}"> <br>
+        <button>Submit</button>
+    </form>
+</body>
+</html>
