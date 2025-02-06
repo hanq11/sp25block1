@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Them phong kham: <br>
+    <form action="/buoi6/add" method="post">
+        Id: <input type="text" name="id"> <br>
+        Ten: <input type="text" name="ten"> <br>
+        Dia chi: <input type="text" name="diaChi"> <br>
+        So nha: <input type="text" name="soNha"> <br>
+        <button>Submit</button>
+    </form>
+    Thong tin bang:
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ten</th>
+                <th>Dia Chi</th>
+                <th>So Nha</th>
+                <th colspan="3">Hanh Dong</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="phongKham : ${danhSach}">
+                <tr>
+                    <td th:text="${phongKham.id}"></td>
+                    <td th:text="${phongKham.ten}"></td>
+                    <td th:text="${phongKham.diaChi}"></td>
+                    <td th:text="${phongKham.soNha}"></td>
+                    <td>
+                        <a th:href="@{|/buoi6/detail/${phongKham.id}|}">Detail</a>
+                        <a th:href="@{|/buoi6/delete?id=${phongKham.id}|}">Delete</a>
+                        <a th:href="@{|/buoi6/update/${phongKham.id}|}">Update</a>
+                    </td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+</body>
+</html>
