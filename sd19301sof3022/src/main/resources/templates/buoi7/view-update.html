@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Sua sinh vien: <br>
+    <form action="/sinh-vien/update" method="post">
+        Id: <input type="text" name="id" th:value="${sinhVien.id}"> <br>
+        Ten: <input type="text" name="ten" th:value="${sinhVien.ten}"> <br>
+        Tuoi: <input type="text" name="tuoi" th:value="${sinhVien.tuoi}"> <br>
+        Gioi tinh:
+        Nam <input type="radio" name="gioiTinh" th:checked="${sinhVien.gioiTinh == true}">
+        Nu <input type="radio" name="gioiTinh" th:checked="${sinhVien.gioiTinh == false}"> <br>
+        <button>Submit</button>
+    </form>
+</body>
+</html>
