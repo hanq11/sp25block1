@@ -12,6 +12,12 @@
     <title>Title</title>
 </head>
 <body>
+    Tim kiem bac si:
+    <form action="/bac-si/search" method="get">
+        Ten: <input type="text" name="ten"> <br>
+        <button>Submit</button>
+    </form>
+    <br>
     Them bac si
     <form action="/bac-si/add" method="post">
         Ten: <input type="text" name="ten"> <br>
@@ -55,5 +61,7 @@
             </c:forEach>
         </tbody>
     </table>
+    <a href="/bac-si/paging?page=${pageNo - 1}">Prev</a> <br>
+    <a href="/bac-si/paging?page=${pageNo + 1}">Next</a>
 </body>
 </html>

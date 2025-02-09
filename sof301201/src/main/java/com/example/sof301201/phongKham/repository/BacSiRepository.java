@@ -4,6 +4,7 @@ import com.example.sof301201.phongKham.model.BacSi;
 import com.example.sof301201.phongKham.model.PhongKham;
 import com.example.sof301201.phongKham.util.HibernateConfig;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -53,5 +54,18 @@ public class BacSiRepository {
             session.getTransaction().rollback();
             e.printStackTrace();
         }
+    }
+
+    public List<BacSi> search(String ten) {
+        Query query = session.createQuery("FROM BacSi WHERE ten LIKE :ten");
+        query.setParameter("ten", "%" + ten + "%");
+        return (List<BacSi>) query.list();
+    }
+
+    public List<BacSi> paging(int pageNo, int pageSize) {
+        Query query = session.createQuery("From BacSi");
+        query.setFirstResult(pageNo * pageSize);
+        query.setMaxResults(pageSize);
+        return (List<BacSi>) query.list();
     }
 }

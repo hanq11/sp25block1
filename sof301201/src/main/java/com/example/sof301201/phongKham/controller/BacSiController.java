@@ -16,8 +16,10 @@ import java.io.IOException;
         "/bac-si/view-update", // GET
         "/bac-si/detail", // GET
         "/bac-si/delete", // GET
+        "/bac-si/search",  // GET
+        "/bac-si/paging",  // GET
         "/bac-si/add", // POST
-        "/bac-si/update" // POST
+        "/bac-si/update", // POST
 })
 public class BacSiController extends HttpServlet {
     BacSiRepository bacSiRepository = new BacSiRepository();
@@ -33,7 +35,30 @@ public class BacSiController extends HttpServlet {
             viewUpdate(req, resp);
         } else if(uri.contains("delete")) {
             delete(req, resp);
+        } else if(uri.contains("search")) {
+            search(req, resp);
+        } else if(uri.contains("paging")) {
+            paging(req, resp);
         }
+    }
+
+    private void paging(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int pageNo = 0;
+        int pageSize = 2;
+        if(req.getParameter("page") != null) {
+            pageNo = Integer.valueOf(req.getParameter("page"));
+        }
+        req.setAttribute("pageNo", pageNo);
+        req.setAttribute("danhSach", bacSiRepository.paging(pageNo, pageSize));
+        req.setAttribute("listPhongKham", phongKhamRepository.getAll());
+        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req, resp);
+    }
+
+    private void search(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String ten = req.getParameter("ten");
+        req.setAttribute("danhSach", bacSiRepository.search(ten));
+        req.setAttribute("listPhongKham", phongKhamRepository.getAll());
+        req.getRequestDispatcher("/bacSi/hien-thi.jsp").forward(req, resp);
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
