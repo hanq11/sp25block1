@@ -37,18 +37,18 @@ public class PhongKham2Controller {
     @PostMapping("/update")
     public String update(PhongKham phongKham) {
         phongKhamRepository.save(phongKham);
-        return "redirect:/phong-kham/hien-thi";
+        return "redirect:/phong-kham2/hien-thi";
     }
 
     @PostMapping("/add")
     public String add(PhongKham phongKham) {
         phongKhamRepository.save(phongKham);
-        return "redirect:/phong-kham/hien-thi";
+        return "redirect:/phong-kham2/hien-thi";
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam("id") Integer id) {
         phongKhamRepository.deleteById(id);
-        return "redirect:/phong-kham/hien-thi";
+        return "redirect:/phong-kham2/hien-thi";
     }
 }
