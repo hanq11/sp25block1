@@ -1,0 +1,43 @@
+CREATE DATABASE TUTOR_COM2012;
+GO
+USE TUTOR_COM2012;
+GO
+CREATE TABLE GiangVien(
+	MaGiangVien varchar(10) PRIMARY KEY,
+	Email varchar(50),
+	SoDienThoai varchar(10)
+);
+GO
+CREATE TABLE TroGiang(
+	MaTroGiang varchar(10) PRIMARY KEY,
+	TenTroGiang nvarchar(50),
+	Email varchar(50),
+	SoDienThoai varchar(10)
+);
+GO
+CREATE TABLE MonHoc(
+	MaMonHoc varchar(10) PRIMARY KEY,
+	TenMonHoc nvarchar(50),
+	SoTinChi int,
+	MaGiangVien varchar(10),
+	FOREIGN KEY(MaGiangVien) REFERENCES GiangVien(MaGiangVien)
+);
+GO
+CREATE TABLE BuoiTroGiang(
+	MaBuoiTroGiang varchar(10) PRIMARY KEY,
+	SoThuTu int,
+	MaMonHoc varchar(10),
+	MaTroGiang varchar(10),
+	FOREIGN KEY(MaMonHoc) REFERENCES MonHoc(MaMonHoc),
+	FOREIGN KEY(MaTroGiang) REFERENCES TroGiang(MaTroGiang)
+);
+GO
+
+SELECT * FROM MonHoc;
+GO
+SELECT * FROM TroGiang;
+GO
+SELECT * FROM BuoiTroGiang;
+GO
+SELECT * FROM GiangVien;
+GO
