@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Them bac si:
+    <form action="/bac-si/add" method="post">
+        Ten: <input type="text" name="ten"> <br>
+        Luong: <input type="text" name="luong"> <br>
+        Gioi tinh:
+            Nam <input type="radio" name="gioiTinh" value="false">
+            Nu <input type="radio" name="gioiTinh" value="true">
+        <br>
+        Phong kham: <select name="phongKham">
+            <option th:each="phongKham : ${listPhongKham}"
+                    th:value="${phongKham.id}"
+                    th:text="${phongKham.ten}"
+            ></option>
+        </select>
+        <br>
+        <button>Submit</button>
+    </form>
+    <br>
+    Bang thong tin:
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ten</th>
+                <th>Luong</th>
+                <th>Gioi Tinh</th>
+                <th>Phong kham</th>
+                <th>Hanh dong</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="bacSi : ${listBacSi}">
+                <tr>
+                    <td th:text="${bacSi.id}"></td>
+                    <td th:text="${bacSi.ten}"></td>
+                    <td th:text="${bacSi.luong}"></td>
+                    <td th:text="${bacSi.gioiTinh ? 'Nu': 'Nam'}"></td>
+                    <td th:text="${bacSi.phongKham.ten}"></td>
+                    <td>
+                        <a th:href="@{|/bac-si/detail/${bacSi.id}|}">Detail</a>
+                        <a th:href="@{|/bac-si/view-update/${bacSi.id}|}">View update</a>
+                        <a th:href="@{|/bac-si/delete?id=${bacSi.id}|}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+</body>
+</html>
