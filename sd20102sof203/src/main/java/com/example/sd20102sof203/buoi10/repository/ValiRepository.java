@@ -32,4 +32,60 @@ public class ValiRepository {
         }
         return danhSach;
     }
+
+    public Vali getOne(String ma) {
+        String sql = "SELECT * FROM Vali WHERE ma = ?";
+        Vali vali = new Vali();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, ma);
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
+            while(rs.next()) {
+                vali.setMa(rs.getString("ma"));;
+                vali.setTen(rs.getString("ten"));
+                vali.setGia(rs.getInt("gia"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return vali;
+    }
+
+    public void add(Vali vali) {
+        String sql = "INSERT INTO Vali (ma, ten, gia) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, vali.getMa());
+            ps.setString(2, vali.getTen());
+            ps.setInt(3, vali.getGia());
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(Vali vali) {
+        String sql = "UPDATE Vali SET ten = ?, gia = ? WHERE ma = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, vali.getTen());
+            ps.setInt(2, vali.getGia());
+            ps.setString(3, vali.getMa());
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(String ma) {
+        String sql = "DELETE FROM Vali WHERE ma = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, ma);
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

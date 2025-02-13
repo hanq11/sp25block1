@@ -12,7 +12,15 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Bang thong tin</h2>
+    <h2>Form them thong tin</h2>
+    <form action="/vali/add" method="post">
+        Ma: <input type="text" name="ma"> <br>
+        Ten: <input type="text" name="ten"> <br>
+        Gia: <input type="text" name="gia"> <br>
+        <button>Submit</button>
+    </form>
+
+    <h2>Bang thong tin</h2>
     <table>
         <thead>
         <tr>
@@ -29,6 +37,8 @@
                 <td>${vali.ten}</td>
                 <td>${vali.gia}</td>
                 <td>
+                    <a href="/vali/view-update?ma=${vali.ma}">View update</a>
+                    <a href="/vali/xoa?ma=${vali.ma}">Xoa</a>
                 </td>
             </tr>
         </c:forEach>
