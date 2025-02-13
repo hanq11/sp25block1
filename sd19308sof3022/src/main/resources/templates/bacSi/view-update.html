@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Sua bac si: <br>
+    <form action="/bac-si/update" method="post">
+        Id: <input type="text" name="id" th:value="${bacSi.id}"> <br>
+        Ten: <input type="text" name="ten" th:value="${bacSi.ten}"> <br>
+        Luong: <input type="text" name="luong" th:value="${bacSi.luong}"> <br>
+        Gioi tinh:
+        Nam <input type="radio" name="gioiTinh" value="false" th:checked="${bacSi.gioiTinh == false}">
+        Nu <input type="radio" name="gioiTinh" value="true" th:checked="${bacSi.gioiTinh == true}"> <br>
+        Phong Kham:
+        <select name="phongKham">
+            <option th:each="phongKham : ${listPhongKham}"
+                    th:value="${phongKham.id}" th:text="${phongKham.ten}"
+                    th:selected="${bacSi.phongKham.id == phongKham.id}"
+            >
+            </option>
+        </select>
+        <br>
+        <button>Submit</button>
+    </form>
+</body>
+</html>
