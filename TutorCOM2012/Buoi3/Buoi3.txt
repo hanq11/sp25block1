@@ -1,0 +1,104 @@
+-- Buoi3 
+USE TUTOR_COM2012;
+--1.Lấy tất cả thông tin về các Môn Học.
+SELECT * FROM MonHoc;
+--2.Lấy tên, email, và số điện thoại của tất cả Giảng Viên.
+SELECT Ten, Email, SoDienThoai FROM GiangVien;
+--3.Hiển thị thông tin về các Buổi Trợ Giảng kèm theo 
+--tên của Trợ Giảng và tên Môn Học.
+SELECT btg.MaBuoiTroGiang, btg.SoThuTu, tg.TenTroGiang, mh.TenMonHoc
+FROM BuoiTroGiang btg
+INNER JOIN TroGiang tg ON btg.MaTroGiang = tg.MaTroGiang
+INNER JOIN MonHoc mh ON btg.MaMonHoc = mh.MaMonHoc;
+
+-- JOIN: INNER JOIN, LEFT JOIN, RIGHT JOIN
+CREATE TABLE Sach(
+	MaSach varchar(10) PRIMARY KEY,
+	TenSach nvarchar(50) NOT NULL,
+	MaTacGia varchar(10),
+	NamXuatBan int,
+	SoLuong int
+);
+
+CREATE TABLE TacGia(
+	MaTacGia varchar(10) PRIMARY KEY,
+	TenTacGia nvarchar(50) NOT NULL,
+	NgaySinh date,
+	QuocTich nvarchar(30),
+	GioiTinh nvarchar(20)
+);
+
+INSERT INTO Sach
+	(MaSach, TenSach, MaTacGia, NamXuatBan, SoLuong)
+VALUES
+	('SACH001',N'Tên sách 1','TG001',1936,20),
+	('SACH002',N'Tên sách 2','TG002',1945,30),
+	('SACH003',N'Tên sách 3','TG003',1700,10);
+
+INSERT INTO TacGia
+	(MaTacGia, TenTacGia, NgaySinh, QuocTich, GioiTinh)
+VALUES
+	('TG001',N'Bùi Duy Tôn','2005-09-12',N'Việt Nam',N'Nam'),
+	('TG002',N'Nguyễn Văn A','1938-12-9',N'Việt Nam',N'Nữ'),
+	('TG003',N'Nguyễn Thị B','1890-3-8',N'Việt Nam',N'Nữ');
+INSERT INTO TacGia
+	(MaTacGia, TenTacGia, NgaySinh, QuocTich, GioiTinh)
+VALUES
+	('TG004',N'Nguyễn Thiên Nhiên','1890-3-8',N'Việt Nam',N'Nữ');
+SELECT * FROM Sach;
+SELECT * FROM TacGia;
+
+-- Truy vấn có điều kiện
+-- Mệnh đề WHERE, thực hiện truy vấn với các phép so sánh số: >, <, =, >=, <=
+-- Lấy ra các Sach có NamXuatBan = 1936
+SELECT * FROM Sach WHERE NamXuatBan = 1936;
+-- Lấy ra các Sach có NamXuatBan trước 1800
+SELECT * FROM Sach WHERE NamXuatBan < 1800;
+-- Truy vấn với WHERE, thực hiện các phép so sánh với chuỗi
+-- Sử dụng LIKE để tìm kiếm chuỗi
+
+-- Tìm kiếm TenTacGia ở bảng TacGia có chứa chữ Duy trong tên
+SELECT * FROM TacGia WHERE TenTacGia LIKE '%DUY%';
+-- Mệnh đề WHERE, thực hiện truy vấn chuỗi với LIKE
+-- % -- thể hiện cho 0 hoặc nhiều ký tự
+-- Tìm kiếm TenTacGia có chứa chữ Nguyễn ở đầu
+SELECT * FROM TacGia WHERE TenTacGia LIKE N'Nguyễn%';
+
+-- Mệnh đề WHERE, thực hiện truy vấn date: >, <, =, >=, <=
+-- Tìm những tác giả có NgaySinh trước năm 1939
+
+-- UPDATE -- Sửa bản ghi
+-- Đổi bản ghi có TenSach là 'Tên sách 1' thành 'Suối Nguồn'
+UPDATE Sach
+SET TenSach = N'Suối Nguồn'
+WHERE TenSach = N'Tên sách 1';
+SELECT * FROM Sach;
+-- Đổi NamXuatBan của bản ghi có SoLuong là 30 trong bảng Sach thành 1999
+UPDATE Sach
+SET SoLuong = 1999
+WHERE SoLuong = 30;
+-- Xóa QuocTich của bản ghi có TenTacGia chứa chữ 'Duy' trong bảng TacGia
+UPDATE TacGia
+SET QuocTich = NULL
+WHERE TenTacGia LIKE '%Duy%';
+SELECT * FROM TacGia;
+
+-- Sử dụng SELECT để tìm ra TacGia có QuocTich là NULL
+SELECT * FROM TacGia WHERE QuocTich IS NULL;
+SELECT * FROM TacGia WHERE QuocTich IS NOT NULL;
+
+-- So sánh !=
+-- Truy vấn TacGia có GioiTinh không phải là Nam
+SELECT * FROM TacGia WHERE GioiTinh != 'Nam';
+-- Xóa bản ghi của bảng với DELETE
+-- Xóa bản ghi có TenTacGia có chứa chữ 'Nguyễn' ở đầu
+DELETE FROM TacGia WHERE TenTacGia LIKE N'Nguyễn%';
+SELECT * FROM TacGia;
+-- Tổng kết
+-- Cách sử dụng mệnh đề WHERE trong SELECT, UPDATE, DELETE
+-- So sánh số: =, !=, >, <, >=, <=
+-- So sánh chuỗi: =, !=, LIKE (% - Sử dụng để biểu diễn 0 hoặc nhiều ký tự)
+-- So sánh NULL: IS NULL, IS NOT NULL
+-- So sánh ngày tháng (date): =, !=, >, <, >=, <=
+-- UPDATE - Sửa bản ghi
+-- DELETE - Xóa bản ghi
