@@ -1,0 +1,95 @@
+CREATE DATABASE TUTOR_COM2012;
+GO
+USE [TUTOR_COM2012]
+GO
+/****** Object:  Table [dbo].[BuoiTroGiang]    Script Date: 2/14/2025 9:44:32 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BuoiTroGiang](
+	[MaBuoiTroGiang] [varchar](10) NOT NULL,
+	[SoThuTu] [int] NULL,
+	[MaMonHoc] [varchar](10) NULL,
+	[MaTroGiang] [varchar](10) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaBuoiTroGiang] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[GiangVien]    Script Date: 2/14/2025 9:44:32 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GiangVien](
+	[MaGiangVien] [varchar](10) NOT NULL,
+	[Email] [varchar](50) NULL,
+	[SoDienThoai] [varchar](10) NULL,
+	[Ten] [nvarchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaGiangVien] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MonHoc]    Script Date: 2/14/2025 9:44:32 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MonHoc](
+	[MaMonHoc] [varchar](10) NOT NULL,
+	[TenMonHoc] [nvarchar](50) NULL,
+	[SoTinChi] [int] NULL,
+	[MaGiangVien] [varchar](10) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaMonHoc] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TroGiang]    Script Date: 2/14/2025 9:44:32 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TroGiang](
+	[MaTroGiang] [varchar](10) NOT NULL,
+	[TenTroGiang] [nvarchar](50) NULL,
+	[Email] [varchar](50) NULL,
+	[SoDienThoai] [varchar](10) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MaTroGiang] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[BuoiTroGiang] ([MaBuoiTroGiang], [SoThuTu], [MaMonHoc], [MaTroGiang]) VALUES (N'BTG2', 3, N'MH03', N'TG02')
+GO
+INSERT [dbo].[GiangVien] ([MaGiangVien], [Email], [SoDienThoai], [Ten]) VALUES (N'GV02', N'b@gmail.com', N'234234', N'Tran Van B')
+GO
+INSERT [dbo].[GiangVien] ([MaGiangVien], [Email], [SoDienThoai], [Ten]) VALUES (N'GV03', N'c@gmail.com', N'345345', N'Nguyen Thi C')
+GO
+INSERT [dbo].[GiangVien] ([MaGiangVien], [Email], [SoDienThoai], [Ten]) VALUES (N'GV04', N'd@gmail.com', N'456456', N'Nguyen Van D')
+GO
+INSERT [dbo].[MonHoc] ([MaMonHoc], [TenMonHoc], [SoTinChi], [MaGiangVien]) VALUES (N'MH02', N'Java 1', 10, N'GV02')
+GO
+INSERT [dbo].[MonHoc] ([MaMonHoc], [TenMonHoc], [SoTinChi], [MaGiangVien]) VALUES (N'MH03', N'Mon gi day', 1, N'GV04')
+GO
+INSERT [dbo].[TroGiang] ([MaTroGiang], [TenTroGiang], [Email], [SoDienThoai]) VALUES (N'TG01', N'tg01', N'tg01@gmail.com', N'0123')
+GO
+INSERT [dbo].[TroGiang] ([MaTroGiang], [TenTroGiang], [Email], [SoDienThoai]) VALUES (N'TG02', N'tg02', N'tg02@gmail.com', N'345')
+GO
+INSERT [dbo].[TroGiang] ([MaTroGiang], [TenTroGiang], [Email], [SoDienThoai]) VALUES (N'TG03', N'tg03', N'tg03@gmail.com', N'0456')
+GO
+ALTER TABLE [dbo].[BuoiTroGiang]  WITH CHECK ADD FOREIGN KEY([MaMonHoc])
+REFERENCES [dbo].[MonHoc] ([MaMonHoc])
+GO
+ALTER TABLE [dbo].[BuoiTroGiang]  WITH CHECK ADD FOREIGN KEY([MaTroGiang])
+REFERENCES [dbo].[TroGiang] ([MaTroGiang])
+GO
+ALTER TABLE [dbo].[MonHoc]  WITH CHECK ADD FOREIGN KEY([MaGiangVien])
+REFERENCES [dbo].[GiangVien] ([MaGiangVien])
+GO
