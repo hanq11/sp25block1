@@ -4,9 +4,12 @@ import com.example.sd19308sof3022.phongKham.model.BacSi;
 import com.example.sd19308sof3022.phongKham.model.PhongKham;
 import com.example.sd19308sof3022.phongKham.repository.BacSiRepository;
 import com.example.sd19308sof3022.phongKham.repository.PhongKhamRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,13 +29,17 @@ public class BacSiController {
     }
 
     @GetMapping("/hien-thi")
-    public String hienThi(Model model) {
+    public String hienThi(Model model, @ModelAttribute BacSi bacSi) {
         model.addAttribute("listBacSi", bacSiRepository.findAll());
         return "bacSi/hien-thi";
     }
 
     @PostMapping("/add")
-    public String add(BacSi bacSi) {
+    public String add(Model model, @ModelAttribute @Valid BacSi bacSi, Errors errors) {
+        if(errors.hasErrors()) {
+            model.addAttribute("listBacSi", bacSiRepository.findAll());
+            return "bacSi/hien-thi";
+        }
         bacSiRepository.save(bacSi);
         return "redirect:/bac-si/hien-thi";
     }
