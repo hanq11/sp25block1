@@ -7,6 +7,9 @@ import com.example.sd19308sof3022.phongKham.repository.PhongKhamRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -32,6 +35,16 @@ public class BacSiController {
     public String hienThi(Model model, @ModelAttribute BacSi bacSi) {
         model.addAttribute("listBacSi", bacSiRepository.findAll());
         return "bacSi/hien-thi";
+    }
+
+    @GetMapping("/phan-trang")
+    public String phanTrang(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page
+                            , Model model) {
+        int size = 3;
+        Sort sort = Sort.by(Sort.Direction.DESC, "ten");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        model.addAttribute("page", bacSiRepository.findAll(pageable));
+        return "bacSi/phan-trang";
     }
 
     @PostMapping("/add")
