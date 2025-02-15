@@ -6,20 +6,28 @@
 </head>
 <body>
     Them bac si:
-    <form action="/bac-si/add" method="post">
-        Ten: <input type="text" name="ten"> <br>
-        Luong: <input type="text" name="luong"> <br>
+    <form th:object="${bacSi}" action="/bac-si/add" method="post">
+        Ten: <input type="text" th:field="*{ten}">
+        <span style="color: red" th:errors="*{ten}"></span>
+        <br>
+        Luong: <input type="text" th:field="*{luong}">
+        <span style="color: red" th:errors="*{luong}"></span>
+        <br>
         Gioi tinh:
-            Nam: <input type="radio" name="gioiTinh" value="false">
-            Nu: <input type="radio" name="gioiTinh" value="true">
+            Nam: <input type="radio" th:field="*{gioiTinh}" value="false">
+            Nu: <input type="radio" th:field="*{gioiTinh}" value="true">
+        <span style="color: red" th:errors="*{gioiTinh}"></span>
         <br>
         Phong kham:
         <select name="phongKham">
+            <option value="">Vui long chon phong kham</option>
             <option th:each="phongKham : ${listPhongKham}"
                     th:value="${phongKham.id}"
                     th:text="${phongKham.ten}"
             ></option>
-        </select> <br>
+        </select>
+        <span style="color: red" th:errors="*{phongKham}"></span>
+        <br>
         <button>Submit</button>
     </form>
     <br>

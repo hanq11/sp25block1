@@ -4,6 +4,7 @@ import com.example.sd19301sof3022.phongKham.model.BacSi;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public interface BacSiRepository extends JpaRepository<BacSi, Integer> {
 }
