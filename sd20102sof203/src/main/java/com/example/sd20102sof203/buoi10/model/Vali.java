@@ -14,3 +14,4 @@ public class Vali {
     private String ten;
     private Integer gia;
 }
+
