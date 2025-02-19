@@ -1,0 +1,96 @@
+USE TUTOR_COM2012;
+GO
+CREATE TABLE DatHang (
+	MaDatHang varchar(10) PRIMARY KEY,
+	TenSanPham nvarchar(100),
+	NhaSanXuat varchar(20),
+	TheLoai nvarchar(100),
+	SoLuong int,
+	GiaBan int,
+	NgayDat date,
+	TenKhachHang varchar(100),
+	SoDienThoaiKhachHang varchar(20),
+	DiaChiKhachHang varchar(100)
+);
+GO
+
+USE [TUTOR_COM2012]
+GO
+
+INSERT INTO [dbo].[DatHang]
+           ([MaDatHang]
+           ,[TenSanPham]
+           ,[NhaSanXuat]
+           ,[TheLoai]
+           ,[SoLuong]
+           ,[GiaBan]
+           ,[NgayDat]
+           ,[TenKhachHang]
+           ,[SoDienThoaiKhachHang]
+           ,[DiaChiKhachHang])
+     VALUES
+		('DH001',N'TV Samsung','Samsung',N'Điện tử',1,10000000,'01/02/2024','Tran Thi A','987654321','Ha Noi'),
+		('DH002',N'Điện thoại iPhone','Apple',N'Điện tử, Điện thoại','2','20000000','03/02/2024','Nguyen Thi B','912345678','TP.HCM'),
+		('DH003',N'Laptop Dell','Dell',N'Điện tử','1','15000000','05/02/2024','Le Thi C','965123456','Da Nang'),
+		('DH004',N'Tủ lạnh LG','LG',N'Điện tử','3','8000000','07/02/2024','Tran Thi A','987654321','Ha Noi'),
+		('DH005',N'Điện thoại Samsung','Samsung',N'Điện tử, Điện thoại','2','12000000','10/02/2024','Nguyen Thi B','912345678','TP.HCM');
+
+SELECT * FROM DatHang;
+
+-- Một số câu truy vấn cột và sắp xếp
+-- Truy vấn TenSanPham, NhaSanXuat, SoLuong, NgayDat trong bảng DatHang
+SELECT TenSanPham, NhaSanXuat, SoLuong, NgayDat
+FROM DatHang;
+GO
+-- Truy vấn TenSanPham và SoLuong với SoLuong giảm dần
+SELECT TenSanPham, SoLuong
+FROM DatHang
+ORDER BY SoLuong DESC;
+GO
+-- Truy vấn TenKhachHang và NgayDat với NgayDat giảm dần
+SELECT TenKhachHang, NgayDat
+FROM DatHang
+ORDER BY NgayDat DESC;
+GO
+
+-- Một số câu truy vấn điều kiện (WHERE)
+-- Truy vấn TenKhachHang có chứa chữ "Thi"
+SELECT TenKhachHang 
+FROM DatHang
+WHERE TenKhachHang LIKE '%Thi%';
+-- Truy vấn tất cả các bản ghi có NgayDat trước tháng 6 năm 2024
+SELECT *
+FROM DatHang
+WHERE NgayDat < '2024-06-01';
+-- Truy vấn tất cả các bản ghi có SoLuong nhỏ hơn 2 và số điện thoại chứa chữ 9 ở đầu
+SELECT * 
+FROM DatHang 
+WHERE (SoLuong < 2 AND SoDienThoaiKhachHang LIKE '9%') OR SoLuong < 3;
+-- Truy vẫn mã đặt hàng có SoDienThoaiKhachHang là 912345678
+SELECT *
+FROM DatHang
+WHERE SoDienThoaiKhachHang = '912345678';
+
+SELECT * FROM DatHang;
+----- Câu lệnh truy vấn tổng hợp - GROUP BY, Hàm AGGREATE
+-- Tính tổng doanh thu từ tất cả các đơn hàng
+SELECT SUM(SoLuong * GiaBan) 
+FROM DatHang;
+-- Tính tổng doanh thu theo từng thể loại sản phẩm
+SELECT TheLoai, SUM(SoLuong * GiaBan)
+FROM DatHang
+GROUP BY TheLoai;
+-- Tính tổng doanh thu theo từng nhà sản xuất
+SELECT NhaSanXuat, SUM(SoLuong * GiaBan)
+FROM DatHang
+GROUP BY NhaSanXuat;
+-- Đếm tổng số đơn hàng theo từng khách hàng
+SELECT TenKhachHang, COUNT(*) AS 'So luong don hang'
+FROM DatHang
+GROUP BY TenKhachHang;
+-- Khi sử dụng group by, chúng ta sẽ gộp một số hàng nhất định cột được chỉ định, những cột còn lại
+-- phải sử dụng các hàm AGGREATE (COUNT, SUM, AVG)
+-- Tính doanh thu trung bình trên từng khách
+SELECT TenKhachHang, AVG(SoLuong * GiaBan) AS 'Doanh thu trung binh'
+FROM DatHang
+GROUP BY TenKhachHang;
