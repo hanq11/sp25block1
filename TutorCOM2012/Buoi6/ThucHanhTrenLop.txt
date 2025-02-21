@@ -1,0 +1,179 @@
+CREATE DATABASE DeMau1_COM2012;
+GO
+USE DeMau1_COM2012;
+GO
+
+--Mã giày        Tên giày        Biến thể        Đơn giá        Số lượng        Thương hiệu        Chất liệu        Giới tính        Loại đế giày        Phong cách thiết kế
+--G001        Giày thể thao Air        Màu đen - Size 40        1,200,000        50        Nike        Da thật        Nam        Cao su        Thể thao, Chạy bộ
+
+CREATE TABLE Giay(
+	MaGiay varchar(10),
+	TenGiay nvarchar(100),
+	BienThe nvarchar(100),
+	DonGia int,
+	SoLuong int,
+	ThuongHieu nvarchar(100),
+	ChatLieu nvarchar(100),
+	GioiTinh nvarchar(100),
+	LoaiDeGiay nvarchar(100),
+	PhongCachThietKe nvarchar(100)
+);
+
+INSERT INTO Giay
+VALUES
+	('G001', N'Giày thể thao Air', N'Màu đen - Size 40', 1200000, 50, 'Nike', N'Da thật', 'Nam', 'Cao su', N'Thể thao, Chạy bộ'),
+    ('G001', N'Giày thể thao Air', N'Màu trắng - Size 41', 1200000, 30, 'Nike', N'Da thật', 'Nam', 'Cao su', N'Thể thao, Chạy bộ'),
+    ('G001', N'Giày thể thao Air', N'Màu xám - Size 42', 1250000, 40, 'Nike', N'Da thật', 'Nam', 'Cao su', N'Thể thao, Đi bộ'),
+    ('G002', N'Giày thể thao Ultra', N'Màu xanh lá - Size 42', 1300000, 20, 'Adidas', N'Vải', 'Nam', 'Cao su', N'Thể thao, Training'),
+    ('G002', N'Giày thể thao Ultra', N'Màu đen - Size 40', 1300000, 25, 'Adidas', N'Vải', 'Nam', 'Cao su', N'Thể thao, Training'),
+    ('G003', N'Giày cao gót Classic', N'Màu đỏ - Size 38', 850000, 15, 'Gucci', N'Da bò', N'Nữ', N'Da thật', N'Cao gót, Dạ hội'),
+    ('G003', N'Giày cao gót Classic', N'Màu đen - Size 39', 850000, 10, 'Gucci', N'Da bò', N'Nữ', N'Da thật', N'Cao gót, Dạ hội'),
+    ('G004', N'Giày lười Casual', N'Màu nâu - Size 43', 950000, 40, 'Clarks', N'Da thật', 'Nam', 'Cao su', N'Lười, Công sở'),
+    ('G004', N'Giày lười Casual', N'Màu đen - Size 42', 950000, 30, 'Clarks', N'Da thật', 'Nam', 'Cao su', N'Lười, Công sở'),
+    ('G005', N'Giày búp bê Fashion', N'Màu hồng - Size 36', 450000, 100, 'Zara', N'Vải', N'Nữ', 'Cao su', N'Búp bê, Hè'),
+    ('G005', N'Giày búp bê Fashion', N'Màu trắng - Size 37', 450000, 80, 'Zara', N'Vải', N'Nữ', 'Cao su', N'Búp bê, Hè'),
+    ('G006', N'Giày thể thao Sport', N'Màu xanh dương - Size 39', 1100000, 60, 'Puma', N'Vải', 'Nam', 'Cao su', N'Thể thao, Training'),
+    ('G007', N'Giày búp bê Elegance', N'Màu đen - Size 37', 500000, 80, 'Mango', N'Da bò', N'Nữ', N'Da thật', N'Búp bê, Công sở');
+
+SELECT * FROM Giay;
+GO
+-- Hiển thị danh sách giày gồm: Tên giày, Biến thể, Đơn giá, Số lượng
+SELECT TenGiay, BienThe, DonGia, SoLuong
+FROM Giay;
+GO
+-- Hiển thị danh sách giày dành cho Nam
+SELECT *
+FROM Giay
+WHERE GioiTinh = 'Nam';
+GO
+-- Hiển thị danh sách thương hiệu kèm giá trung bình
+-- AVG - Tính trung bình, SUM - Tính tổng, COUNT - Đếm
+SELECT ThuongHieu, AVG(DonGia)
+FROM Giay
+GROUP BY ThuongHieu;
+GO
+--ThuongHieu | DonGia 
+--NIKE	   | AVG(DonGia) (1200 + 1250)/3
+
+-- Hiển thị giá giày màu đen rẻ nhất
+-- Cach 1
+SELECT MIN(DonGia)
+FROM Giay
+WHERE BienThe LIKE N'%đen%';
+-- Cach 2
+SELECT TOP 1 *
+FROM Giay
+WHERE BienThe LIKE N'%đen%'
+ORDER BY DonGia ASC;
+-- Hiển thị danh sách giày size dưới 40 kèm số lượng SUBSTRING()
+
+-- Phan nang cao: 7,8,9,10 diem
+-- Chuan hoa xong
+CREATE TABLE PhongCachThietKe(
+	MaPhongCachThietKe int IDENTITY(1,1) PRIMARY KEY,
+	Ten nvarchar(100)
+);
+GO
+
+CREATE TABLE GiayChuanHoa (
+	MaGiay int IDENTITY(1,1) PRIMARY KEY,
+	TenGiay nvarchar(100),
+	ThuongHieu varchar(100),
+	ChatLieu nvarchar(100),
+	GioiTinh nvarchar(100),
+	LoaiDeGiay nvarchar(100)
+);
+
+CREATE TABLE PhongCachThietKeGiay(
+	MaPhongCachThietKe int,
+	MaGiay int,
+	FOREIGN KEY(MaPhongCachThietKe) REFERENCES PhongCachThietKe(MaPhongCachThietKe),
+	FOREIGN KEY(MaGiay) REFERENCES GiayChuanHoa(MaGiay),
+	PRIMARY KEY(MaPhongCachThietKe, MaGiay)
+);
+
+CREATE TABLE BienThe(
+	MaBienThe int IDENTITY(1,1) PRIMARY KEY,
+	MaGiay int,
+	MauSac nvarchar(100),
+	Size int,
+	DonGia int,
+	SoLuong int,
+	FOREIGN KEY(MaGiay) REFERENCES GiayChuanHoa(MaGiay)
+);
+
+INSERT INTO PhongCachThietKe
+VALUES
+	(N'Thể thao'),
+	(N'Chạy bộ'),
+	(N'Đi bộ'),
+	(N'Training'),
+	(N'Cao gót'),
+	(N'Dạ hội'),
+	(N'Lười'),
+	(N'Công sở'),
+	(N'Búp bê'),
+	(N'Hè');
+
+INSERT INTO GiayChuanHoa
+VALUES
+	('Giày thể thao Air','Nike','Da thật','Nam','Cao su'),
+	('Giày thể thao Ultra','Adidas','Vải','Nam','Cao su'),
+	('Giày cao gót Classic','Gucci','Da bò','Nữ','Da thật'),
+	('Giày lười Casual','Clarks','Da thật','Nam','Cao su'),
+	('Giày búp bê Fashion','Zara','Vải','Nữ','Cao su'),
+	('Giày thể thao Sport','Puma','Vải','Nam','Cao su'),
+	('Giày búp bê Elegance','Mango','Da bò','Nữ','Da thật');
+INSERT INTO PhongCachThietKeGiay
+VALUES
+	(1,1),
+	(2,1),
+	(3,1),
+	(1,2),
+	(4,2),
+	(5,3),
+	(6,3),
+	(7,4),
+	(8,4),
+	(9,5),
+	(10,5),
+	(1,6),
+	(4,6),
+	(8,7),
+	(9,7);
+INSERT INTO BienThe
+VALUES
+	(1, N'Màu đen','40','1200000','50'),
+	(1, N'Màu trắng','41','1200000','30'),
+	(1, N'Màu xám','42','1250000','40'),
+	(2, N'Màu xanh lá','42','1300000','20'),
+	(2, N'Màu đen','40','1300000','25'),
+	(3, N'Màu đỏ','38','850000','15'),
+	(3, N'Màu đen','39','850000','10'),
+	(4, N'Màu nâu','43','950000','40'),
+	(4, N'Màu đen','42','950000','30'),
+	(5, N'Màu hồng','36','450000','100'),
+	(5, N'Màu trắng','37','450000','80'),
+	(6, N'Màu xanh dương','39','1100000','60'),
+	(7, N'Màu đen','37','500000','80'),
+	(7, N'Màu nude','38','500000','70');
+
+--Hiển thị giá giày màu đen rẻ nhất
+SELECT TOP 1 *
+FROM BienThe bt
+INNER JOIN GiayChuanHoa gch ON bt.MaGiay = gch.MaGiay
+WHERE bt.MauSac LIKE N'%đen%'
+ORDER BY DonGia; 
+--Hiển thị danh sách giày size dưới 40 kèm số lượng
+SELECT *
+FROM BienThe bt
+WHERE bt.SoLuong < 40
+--Hiển thị số lượng sản phẩm theo phong cách thiết kế (Thể thao, Chạy bộ, Đi bộ, Dạ hội,...)
+SELECT pctk.Ten, COUNT(*) AS 'So luong'
+FROM PhongCachThietKeGiay pctkg
+INNER JOIN PhongCachThietKe pctk ON pctkg.MaPhongCachThietKe = pctk.MaPhongCachThietKe
+INNER JOIN GiayChuanHoa gch ON pctkg.MaGiay = gch.MaGiay
+INNER JOIN BienThe bt ON bt.MaGiay = gch.MaGiay
+GROUP BY pctk.Ten
+
+
