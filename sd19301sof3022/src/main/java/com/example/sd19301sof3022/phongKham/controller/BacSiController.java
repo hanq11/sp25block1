@@ -34,6 +34,10 @@ public class BacSiController {
     public String hienThi(Model model, @ModelAttribute BacSi bacSi) {
         model.addAttribute("listBacSi", bacSiRepository.findAll());
 //        model.addAttribute("listPhongKham", phongKhamRepository.findAll());
+        System.out.println("/////////JPQL");
+        System.out.println(bacSiRepository.timKiemTheoTen("ac si").get(0).getTen());
+        System.out.println("/////////Native query - SQL");
+        System.out.println(bacSiRepository.timKiemTheoTenNative("ac si").get(0).getTen());
         return "bacSi/hien-thi";
     }
 
@@ -45,6 +49,12 @@ public class BacSiController {
         Pageable pageable = PageRequest.of(page, pageSize, sort);
         model.addAttribute("page", bacSiRepository.findAll(pageable));
         return "bacSi/phan-trang";
+    }
+
+    @GetMapping("/tim-kiem-theo-ten")
+    public String timKiem(Model model, @RequestParam("ten") String ten, BacSi bacSi) {
+        model.addAttribute("listBacSi", bacSiRepository.findBacSisByTenContainsOrderByLuongDesc(ten));
+        return "bacSi/hien-thi";
     }
 
     @PostMapping("/add")
