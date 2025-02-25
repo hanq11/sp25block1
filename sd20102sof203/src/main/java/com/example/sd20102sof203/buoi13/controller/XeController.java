@@ -4,6 +4,8 @@ import com.example.sd20102sof203.buoi10.model.Vali;
 import com.example.sd20102sof203.buoi10.repository.ValiRepository;
 import com.example.sd20102sof203.buoi13.model.Xe;
 import com.example.sd20102sof203.buoi13.repository.XeRepository;
+import com.example.sd20102sof203.buoi13.service.XeService;
+import com.example.sd20102sof203.buoi13.service.impl.XeServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,10 +20,13 @@ import java.io.IOException;
         "/xe/view-update", // GET
         "/xe/xoa", // GET
         "/xe/add", // POST
-        "/xe/update" // POST
+        "/xe/update", // POST
+        "/xe/sap-xep", // GET
+        "/xe/tim-kiem" //Get
 })
 public class XeController extends HttpServlet {
     XeRepository xeRepository = new XeRepository();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +37,22 @@ public class XeController extends HttpServlet {
             viewUpdate(req, resp);
         } else if(uri.contains("xoa")) {
             xoa(req, resp);
+        } else if(uri.contains("sap-xep")) {
+            sapXep(req, resp);
+        } else if(uri.contains("tim-kiem")) {
+            timKiem(req, resp);
         }
+    }
+
+    private void timKiem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String tenXe = req.getParameter("tenXe");
+        req.setAttribute("danhSach", xeRepository.timKiemTheoTen(tenXe));
+        req.getRequestDispatcher("/xe/hien-thi.jsp").forward(req, resp);
+    }
+
+    private void sapXep(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("danhSach", xeRepository.sapXepTheoTen());
+        req.getRequestDispatcher("/xe/hien-thi.jsp").forward(req, resp);
     }
 
     private void xoa(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -47,8 +67,9 @@ public class XeController extends HttpServlet {
         req.getRequestDispatcher("/xe/view-update.jsp").forward(req, resp);
     }
 
+    XeServiceImpl xeServiceImpl = new XeServiceImpl();
     private void hienThi(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("danhSach", xeRepository.getAll());
+        req.setAttribute("danhSach", xeServiceImpl.getAll());
         req.getRequestDispatcher("/xe/hien-thi.jsp").forward(req, resp);
     }
 
@@ -76,9 +97,13 @@ public class XeController extends HttpServlet {
         resp.sendRedirect("/xe/hien-thi");
     }
 
-    private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Integer maXe = Integer.valueOf(req.getParameter("maXe"));
         String tenXe = req.getParameter("tenXe");
+        if(tenXe != null && tenXe.trim().isEmpty()) {
+            req.setAttribute("tenError", "Khong duoc de trong ten");
+            req.getRequestDispatcher("/xe/hien-thi.jsp").forward(req, resp);
+        }
         String hangSanXuat = req.getParameter("hangSanXuat");
         Float gia = Float.valueOf(req.getParameter("gia"));
         Integer soLuong = Integer.valueOf(req.getParameter("soLuong"));

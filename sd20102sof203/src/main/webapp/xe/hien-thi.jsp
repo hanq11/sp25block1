@@ -12,10 +12,16 @@
     <title>Title</title>
 </head>
 <body>
+    <h2>Form tim kiem</h2>
+    <form action="/xe/tim-kiem">
+        Ten xe can tim: <input type="text" name="tenXe"> <br>
+        <button>Search</button>
+    </form>
+    <br>
     <h2>Form them thong tin</h2>
     <form action="/xe/add" method="post">
         maXe: <input type="text" name="maXe"> <br>
-        tenXe: <input type="text" name="tenXe"> <br>
+        tenXe: <input type="text" name="tenXe"> <span style="color: red">${tenError}</span><br>
         hangSanXuat: <input type="text" name="hangSanXuat"> <br>
         gia: <input type="text" name="gia"> <br>
         soLuong: <input type="text" name="soLuong"> <br>
@@ -24,9 +30,16 @@
         isNew: Moi <input type="radio" name="isNew" value="true">
         Cu <input type="radio" name="isNew" value="false">
         <br>
-        <button>Submit</button>
+        <button onclick="return confirm('Ban co chac khong')">Submit</button>
     </form>
-
+    <br>
+    Ten xe: <select name="">
+        <c:forEach items="${danhSach}" var="xe">
+            <option value="${xe.maXe}" label="${xe.tenXe}"></option>
+        </c:forEach>
+    </select> <br>
+    <a href="/xe/sap-xep">Sap xep theo ten</a>
+    <br>
     <h2>Bang thong tin</h2>
     <table>
         <thead>

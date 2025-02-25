@@ -40,6 +40,57 @@ public class XeRepository {
         return danhSach;
     }
 
+    public ArrayList<Xe> timKiemTheoTen(String tenXe) {
+        String sql = "SELECT * FROM Xe WHERE tenXe LIKE ?";
+        ArrayList<Xe> danhSach = new ArrayList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + tenXe + "%");
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
+            while(rs.next()) {
+                danhSach.add(new Xe(
+                        rs.getInt("MaXe"),
+                        rs.getString("TenXe"),
+                        rs.getString("HangSanXuat"),
+                        rs.getFloat("Gia"),
+                        rs.getInt("SoLuong"),
+                        rs.getString("MauSac"),
+                        rs.getString("NgayNhap"),
+                        rs.getBoolean("IsNew")
+                ));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return danhSach;
+    }
+
+    public ArrayList<Xe> sapXepTheoTen() {
+        String sql = "SELECT * FROM Xe ORDER BY NgayNhap DESC";
+        ArrayList<Xe> danhSach = new ArrayList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
+            while(rs.next()) {
+                danhSach.add(new Xe(
+                        rs.getInt("MaXe"),
+                        rs.getString("TenXe"),
+                        rs.getString("HangSanXuat"),
+                        rs.getFloat("Gia"),
+                        rs.getInt("SoLuong"),
+                        rs.getString("MauSac"),
+                        rs.getString("NgayNhap"),
+                        rs.getBoolean("IsNew")
+                ));
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return danhSach;
+    }
+
     public Xe getOne(Integer maXe) {
         String sql = "SELECT * FROM Xe WHERE MaXe = ?";
         Xe xe = new Xe();
