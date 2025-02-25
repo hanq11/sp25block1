@@ -3,10 +3,7 @@ package com.example.sd19308sof3022.phongKham.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 @Getter
@@ -15,6 +12,7 @@ import org.hibernate.validator.constraints.Range;
 @AllArgsConstructor
 @Entity
 @Table(name = "bac_si")
+@ToString
 public class BacSi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

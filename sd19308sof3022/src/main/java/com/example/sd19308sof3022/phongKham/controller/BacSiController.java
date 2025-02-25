@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -34,9 +35,16 @@ public class BacSiController {
     @GetMapping("/hien-thi")
     public String hienThi(Model model, @ModelAttribute BacSi bacSi) {
         model.addAttribute("listBacSi", bacSiRepository.findAll());
+        bacSiRepository.timKiemTheoKhoangLuongNative(10, 300).forEach(bs -> System.out.println(bs.getTen()));
+        bacSiRepository.timKiemTheoKhoangLuong(10, 300).forEach(bs -> System.out.println(bs.getTen()));
         return "bacSi/hien-thi";
     }
 
+    @GetMapping("/tim-kiem-theo-ten")
+    public String timKiem(Model model, @RequestParam("ten") String ten, BacSi bacSi) {
+        model.addAttribute("listBacSi", bacSiRepository.findBacSisByTenContainsOrderByLuongDesc(ten));
+        return "bacSi/hien-thi";
+    }
     @GetMapping("/phan-trang")
     public String phanTrang(@RequestParam(name = "page", defaultValue = "0", required = false) Integer page
                             , Model model) {

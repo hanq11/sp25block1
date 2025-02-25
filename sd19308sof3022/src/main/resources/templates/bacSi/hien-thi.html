@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
+    Tim kiem bac si:
+    <form action="/bac-si/tim-kiem-theo-ten" th:object="${bacSi}">
+        Ten: <input type="text" name="ten"> <br>
+        <button>Search</button>
+    </form>
+    <br>
     Them bac si: <br>
     <form th:object="${bacSi}" action="/bac-si/add" method="post">
         Ten: <input type="text" th:field="*{ten}">
